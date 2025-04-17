@@ -22,3 +22,5 @@ ln -s /home/$USER/downloads
 if [ "${FF_OPEN_URL:-}" ]; then
   echo $FF_OPEN_URL > /tmp/open-url
 fi
+
+/usr/bin/set-layout.sh

@@ -1,6 +1,4 @@
 #!/usr/bin/env ash
-setxkbmap -layout "us,ru" -option "grp:alt_shift_toggle" &
-
 URL_FILE=/tmp/open-url
 
 set -- --profile /config/profile --setDefaultBrowser
