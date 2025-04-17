@@ -6,7 +6,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
 
 - Pull image:
     ```bash
-    docker pull ghcr.io/grisha765/xrdp-docker:latest
+    docker pull ghcr.io/grisha765/xrdp-firefox:latest
     ```
 
 - Run container:
@@ -14,7 +14,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
     docker run -p 3389:3389 \
                 -e USER=demo -e PASSWD=secret \
                 -v $PWD/config:/config \
-                ghcr.io/grisha765/xrdp-docker:latest
+                ghcr.io/grisha765/xrdp-firefox:latest
     ```
 
 - Run with ssl keys:
@@ -27,7 +27,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
                 -v $PWD/config:/config \
                 -v /path/to/key.pem:/key.pem:O \
                 -v /path/to/cert.pem:/cert.pem:O \
-                ghcr.io/grisha765/xrdp-docker:latest
+                ghcr.io/grisha765/xrdp-firefox:latest
     ```
 
 - Other working env's:
