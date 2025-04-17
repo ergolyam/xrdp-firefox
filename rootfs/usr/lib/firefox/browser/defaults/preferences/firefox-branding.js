@@ -1,0 +1,14 @@
+pref("browser.download.dir", "/config/downloads");
+pref("browser.download.folderList", 2);
+pref("toolkit.telemetry.reportingpolicy.firstRun", false);
+pref("security.sandbox.warn_unprivileged_namespaces", false);
+pref("browser.tabs.closeWindowWithLastTab", false);
+pref("browser.warnOnQuitShortcut", false);
+pref("browser.fullscreen.autohide", false);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false)
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false)
+upref("browser.aboutwelcome.enabled", false);
+pref("trailhead.firstrun.didSeeAboutWelcome", true);
+pref("browser.startup.homepage_override.mstone", "ignore");
+pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true);
+pref("media.webspeech.synth.enabled", false);
