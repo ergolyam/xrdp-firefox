@@ -36,6 +36,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
     PASSWD="password"
     TZ="Europe/Moscow"
     FF_OPEN_URL="https://example.com"
+    XKBMAP_OPTION="grp:win_space_toggle"
     DARK_MODE=true
     PORT=3389
     ```
