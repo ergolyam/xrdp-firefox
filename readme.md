@@ -37,6 +37,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
     TZ="Europe/Moscow"
     FF_OPEN_URL="https://example.com"
     DARK_MODE=true
+    PORT=3389
     ```
 
 - Now connect to **`localhost:3389`** with any RDP client (username **demo**, password **secret**). You will land in a maximised Firefox window; when the last tab closes, the session ends and the container stops.
