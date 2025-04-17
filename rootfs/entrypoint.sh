@@ -5,7 +5,14 @@ set -eu
 : "${USER:?env USER is not set}"
 
 mkdir -p /config/downloads
-ln -s /config/downloads /home/$USER/downloads
+
+TARGET="/config/downloads"
+LINK="/home/$USER/downloads"
+
+if [ ! -e "$LINK" ] && [ ! -L "$LINK" ]; then
+    ln -s "$TARGET" "$LINK"
+fi
+
 mkdir -p /config/log/firefox
 mkdir -p /config/profile
 
