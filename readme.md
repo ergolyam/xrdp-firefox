@@ -49,6 +49,6 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
 - **No VNC hop**: uses `xrdp` + `xorgxrdp`; clients see a native RDP server on port 3389.
 - **Persistent browser state**: mount `/config` to keep the Firefox profile, downloads and logs across runs.
 - **IceWM kiosk mode**: no task‑bar, no start menu Firefox owns the entire screen.
-- **Keyboard layout switcher**: `Alt + Shift` toggles between US and RU layouts.
+- **Keyboard layout switcher**: `Super + Space` toggles between US and RU layouts.
 - **PCManFM integration**: `inode/directory` is bound to PCManFM so file links in Firefox open a file‑manager window.
 - **Environment‑driven**: just supply `USER`, `PASSWD`, and optionally `TZ`/`DARK_MODE`.
