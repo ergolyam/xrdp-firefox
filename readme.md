@@ -30,19 +30,18 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
                 ghcr.io/grisha765/xrdp-firefox:latest
     ```
 
-- Other working env's:
-    ```env
-    USER="username"
-    PASSWD="password"
-    TZ="Europe/Moscow"
-    FF_OPEN_URL="https://example.com"
-    XKBMAP_OPTION="grp:win_space_toggle"
-    DARK_MODE=true
-    PORT=3389
-    DISPLAY=10
-    ```
-
 - Now connect to **`localhost:3389`** with any RDP client (username **demo**, password **secret**). You will land in a maximised Firefox window; when the last tab closes, the session ends and the container stops.
+
+## Environment Variables
+
+This image supports all base variables documented in [`xrdp-docker`](https://github.com/grisha765/xrdp-docker?tab=readme-ov-file#environment-variables).
+
+In addition, the following environment variables are specific to **xrdp-firefox**:
+
+| Variable         | Description |
+|------------------|-------------|
+| `FF_OPEN_URL`    | (Optional) URL to open on browser start. |
+| `XKBMAP_OPTION`  | (Optional) XKB option string to configure keyboard layout switching (default: `grp:win_space_toggle`). |
 
 ## Features
 
@@ -51,4 +50,3 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
 - **IceWM kiosk mode**: no task‑bar, no start menu Firefox owns the entire screen.
 - **Keyboard layout switcher**: `Super + Space` toggles between US and RU layouts.
 - **PCManFM integration**: `inode/directory` is bound to PCManFM so file links in Firefox open a file‑manager window.
-- **Environment‑driven**: just supply `USER`, `PASSWD`, and optionally `TZ`/`DARK_MODE`.
