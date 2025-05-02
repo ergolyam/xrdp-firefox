@@ -1,3 +1,5 @@
+#!/usr/bin/env ash
+
 DEFAULT_OPTION="grp:win_space_toggle"
 
 if [ "${XKBMAP_OPTION:-}" ]; then
@@ -8,7 +10,7 @@ if grep -q "^\[rdp_keyboard_ru\]" "/etc/xrdp/xrdp_keyboard.ini"; then
     echo "The rdp_keyboard_ru section is already present - I skip it."
 else
 
-  tee -a /etc/xrdp/xrdp_keyboard.ini >/dev/null <<EOF
+tee -a /etc/xrdp/xrdp_keyboard.ini >/dev/null <<EOF
 
 [rdp_keyboard_ru]
 keyboard_type=4
