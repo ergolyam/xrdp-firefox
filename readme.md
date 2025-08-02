@@ -6,7 +6,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
 
 - Pull image:
     ```bash
-    docker pull ghcr.io/grisha765/xrdp-firefox:latest
+    docker pull ghcr.io/ergolyam/xrdp-firefox:latest
     ```
 
 - Run container:
@@ -14,7 +14,7 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
     docker run -p 3389:3389 \
                 -e USER=demo -e PASSWD=secret \
                 -v $PWD/config:/config \
-                ghcr.io/grisha765/xrdp-firefox:latest
+                ghcr.io/ergolyam/xrdp-firefox:latest
     ```
 
 - Run with ssl keys:
@@ -27,14 +27,14 @@ Treat it as a ready‑made browser kiosk or use it as a base for your own GUI‑
                 -v $PWD/config:/config \
                 -v /path/to/key.pem:/key.pem:ro \
                 -v /path/to/cert.pem:/cert.pem:ro \
-                ghcr.io/grisha765/xrdp-firefox:latest
+                ghcr.io/ergolyam/xrdp-firefox:latest
     ```
 
 - Now connect to **`localhost:3389`** with any RDP client (username **demo**, password **secret**). You will land in a maximised Firefox window; when the last tab closes, the session ends and the container stops.
 
 ## Environment Variables
 
-This image supports all base variables documented in [`xrdp-docker`](https://github.com/grisha765/xrdp-docker?tab=readme-ov-file#environment-variables).
+This image supports all base variables documented in [`xrdp-docker`](https://github.com/ergolyam/xrdp-docker?tab=readme-ov-file#environment-variables).
 
 In addition, the following environment variables are specific to **xrdp-firefox**:
 
