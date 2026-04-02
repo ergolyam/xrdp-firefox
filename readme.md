@@ -41,7 +41,6 @@ In addition, the following environment variables are specific to **xrdp-firefox*
 | Variable         | Description |
 |------------------|-------------|
 | `FF_OPEN_URL`    | (Optional) URL to open on browser start. |
-| `XKBMAP_OPTION`  | (Optional) XKB option string to configure keyboard layout switching (default: `grp:win_space_toggle`). |
 
 ## Features
 
