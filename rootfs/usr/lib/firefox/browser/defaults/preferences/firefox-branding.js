@@ -5,9 +5,9 @@ pref("security.sandbox.warn_unprivileged_namespaces", false);
 pref("browser.tabs.closeWindowWithLastTab", false);
 pref("browser.warnOnQuitShortcut", false);
 pref("browser.fullscreen.autohide", false);
-pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false)
-pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false)
-upref("browser.aboutwelcome.enabled", false);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+pref("browser.aboutwelcome.enabled", false);
 pref("trailhead.firstrun.didSeeAboutWelcome", true);
 pref("browser.startup.homepage_override.mstone", "ignore");
 pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true);
