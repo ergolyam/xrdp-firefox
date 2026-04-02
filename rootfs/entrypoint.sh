@@ -4,20 +4,18 @@ set -eu
 
 : "${USER:?env USER is not set}"
 
-mkdir -p /config/downloads
+DATA_DIR="/data"
+USER_LINK="/home/$USER/downloads"
 
-TARGET="/config/downloads"
-LINK="/home/$USER/downloads"
+mkdir -p ${DATA_DIR}/downloads
+mkdir -p ${DATA_DIR}/log/firefox
+mkdir -p ${DATA_DIR}/profile
 
-if [ ! -e "$LINK" ] && [ ! -L "$LINK" ]; then
-    ln -s "$TARGET" "$LINK"
+if [ ! -e "${USER_LINK}" ] && [ ! -L "${USER_LINK}" ]; then
+    ln -s "${DATA_DIR}/downloads" "${USER_LINK}"
 fi
 
-mkdir -p /config/log/firefox
-mkdir -p /config/profile
-
-chown -R $USER:$USER /config
-ln -s /home/$USER/downloads
+chown -R $USER:$USER ${DATA_DIR}
 
 if [ "${FF_OPEN_URL:-}" ]; then
   echo $FF_OPEN_URL > /tmp/open-url

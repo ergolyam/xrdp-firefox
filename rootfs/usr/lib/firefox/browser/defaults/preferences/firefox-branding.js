@@ -1,4 +1,4 @@
-pref("browser.download.dir", "/config/downloads");
+pref("browser.download.dir", "/data/downloads");
 pref("browser.download.folderList", 2);
 pref("toolkit.telemetry.reportingpolicy.firstRun", false);
 pref("security.sandbox.warn_unprivileged_namespaces", false);
