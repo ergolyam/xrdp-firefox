@@ -12,3 +12,5 @@ pref("trailhead.firstrun.didSeeAboutWelcome", true);
 pref("browser.startup.homepage_override.mstone", "ignore");
 pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true);
 pref("media.webspeech.synth.enabled", false);
+pref("browser.translations.automaticallyPopup", false);
+pref("browser.startup.couldRestoreSession.count", -1);
