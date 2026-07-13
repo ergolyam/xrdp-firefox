@@ -10,42 +10,84 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [ x86_64, aarch64 ]
+    runs-on: ${{ matrix.arch == 'aarch64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Log in to GitHub Container Registry
-        uses: redhat-actions/podman-login@v1
+        uses: redhat-actions/podman-login@2e76993ec4585e058ea832c23ee3d885970936af
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Determine the Docker tag
-        id: get_tag
-        run: |
-          echo "::set-output name=image::ghcr.io/${{ github.repository }}"
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "::set-output name=tag::latest"
-          elif [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            echo "::set-output name=tag::${{ github.sha }}"
-          fi
 
       - name: Build Container image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@061ffd31bb5c3f8733a6f9bbdf00a9fb02eb708c
         with:
-          image: ${{ steps.get_tag.outputs.image }}
-          tags: ${{ steps.get_tag.outputs.tag }}
+          image: ghcr.io/${{ github.repository }}
+          tags: ci-${{ matrix.arch }}
           containerfiles: ./dockerfile
 
-      - name: Push image to GHCR
-        uses: redhat-actions/push-to-registry@v2
+      - name: Save OCI archive
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          mkdir -p out
+          podman save --format oci-archive -o "out/${ARCH}.tar" "${IMAGE}:ci-${ARCH}"
+
+      - name: Upload OCI archive
+        uses: actions/upload-artifact@v7
         with:
-          image: ${{ steps.get_tag.outputs.image }}
-          tags: ${{ steps.get_tag.outputs.tag }}
+          name: image-${{ matrix.arch }}
+          path: out/${{ matrix.arch }}.tar
+          retention-days: 1
+          compression-level: 0
+
+  manifest:
+    name: Manifest push
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download OCI archives
+        uses: actions/download-artifact@v8
+        with:
+          pattern: image-*
+          path: in
+          merge-multiple: true
+
+      - name: Load images into local storage
+        run: |
+          set -euo pipefail
+          for arch in x86_64 aarch64; do
+            podman load -i "in/${arch}.tar"
+          done
+
+      - name: Log in to GitHub Container Registry
+        uses: redhat-actions/podman-login@2e76993ec4585e058ea832c23ee3d885970936af
+        with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create & push multi-arch tags
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}
+          AMD: ghcr.io/${{ github.repository }}:ci-x86_64
+          ARM: ghcr.io/${{ github.repository }}:ci-aarch64
+        run: |
+          set -euxo pipefail
+          tag=latest
+          podman manifest rm "${IMAGE}:${tag}" 2>/dev/null || true
+          podman manifest create "${IMAGE}:${tag}"
+          podman manifest add "${IMAGE}:${tag}" "containers-storage:${AMD}"
+          podman manifest add "${IMAGE}:${tag}" "containers-storage:${ARM}"
+          podman manifest push --all "${IMAGE}:${tag}" "docker://${IMAGE}:${tag}"

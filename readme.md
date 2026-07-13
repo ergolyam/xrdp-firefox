@@ -12,26 +12,26 @@ Treat it as a ready‑made browser kiosk built on top of [`xrdp-docker`](https:/
 - Run container:
     ```bash
     docker run -p 3389:3389 \
-                -e USER=demo -e PASSWD=secret \
-                -v $PWD/data:/data \
-                ghcr.io/ergolyam/xrdp-firefox:latest
+        -v xrdp-keys:/keys \
+        -e USER=demo -e PASSWD=secret \
+        -v $PWD/data:/data \
+        ghcr.io/ergolyam/xrdp-firefox:latest
     ```
     - Mounting `/data` is what keeps the Firefox profile, downloads and logs across restarts.
 
-- Run with ssl keys:
-    ```bash
-    openssl req -x509 -newkey rsa:2048 -nodes -keyout /path/to/key.pem -out /path/to/cert.pem -days 365
-    ```
-    ```bash
-    docker run -p 3389:3389 \
-                -e USER=demo -e PASSWD=secret \
-                -v $PWD/data:/data \
-                -v /path/to/key.pem:/key.pem:ro \
-                -v /path/to/cert.pem:/cert.pem:ro \
-                ghcr.io/ergolyam/xrdp-firefox:latest
-    ```
-
 - Now connect to **`localhost:3389`** with any RDP client (username **demo**, password **secret**). You will land in a maximised Firefox window; when the Firefox process exits, the session ends and the container stops.
+
+### Required key storage
+
+A writable volume mounted at /keys is required. The container will not start without it.
+
+The container stores the XRDP TLS certificate, private key, and legacy RSA key material in this directory:
+
+- `/keys/cert.pem`
+- `/keys/key.pem`
+- `/keys/rsakeys.ini`
+
+The files are generated automatically on the first start and reused on subsequent starts. The container exits with an error if /keys does not exist or is not writable.
 
 ## Environment Variables
 
@@ -42,12 +42,6 @@ In addition, the following environment variables are specific to **xrdp-firefox*
 | Variable         | Description |
 |------------------|-------------|
 | `FF_OPEN_URL`    | (Optional) URL to open in the first Firefox window on browser start. |
-
-When you mount `/data`, the container stores:
-
-- Firefox profile in `/data/profile`
-- downloaded files in `/data/downloads` (also linked into the user home directory as `~/downloads`)
-- browser logs in `/data/log/firefox/output.log` and `/data/log/firefox/error.log`
 
 ## Features
 
